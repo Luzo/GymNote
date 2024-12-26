@@ -11,7 +11,7 @@ import SwiftUI
 struct GymNoteApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          AppFeature.MainView(store: .init(initialState: .init(), reducer: AppFeature.init))
         }
     }
 }
