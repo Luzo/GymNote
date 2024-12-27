@@ -4,25 +4,23 @@
 //
 //  Created by Lubos Lehota on 26/12/2024.
 //
+
 import ComposableArchitecture
 import SwiftUI
 
 extension AppFeature {
+  @ViewAction(for: AppFeature.self)
   struct MainView: View {
-    let store: StoreOf<AppFeature>
+    @Bindable var store: StoreOf<AppFeature>
 
     var body: some View {
       Form {
         Section {
-          Text("\(store.count)")
+          TextField("Add text to process", text: $store.textToTokenize)
         }
 
         Section {
-          Button("Do nothing") { store.send(.nothing) }
-        }
-
-        if let fact = store.numberFact {
-          Text(fact)
+          Button("Process text") { send(.tokenizeTapped) }
         }
       }
     }

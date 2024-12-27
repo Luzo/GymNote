@@ -11,19 +11,29 @@ import ComposableArchitecture
 struct AppFeature {
   @ObservableState
   struct State: Equatable {
-    var count = 0
-    var numberFact: String?
+    var textToTokenize: String = ""
   }
 
-  enum Action {
-    // TODO: placeholder action
-    case nothing
+  enum Action: ViewAction {
+    case view(View)
+
+    @CasePathable
+    public enum View: BindableAction, Sendable {
+      case binding(BindingAction<State>)
+      case tokenizeTapped
+    }
   }
 
   var body: some Reducer<State, Action> {
+    BindingReducer(action: \.view)
+
     Reduce { state, action in
       switch action {
-      case .nothing:
+      case .view(.tokenizeTapped):
+        print(state.textToTokenize)
+        return .none
+
+      case .view:
         return .none
       }
     }
