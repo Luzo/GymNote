@@ -23,6 +23,9 @@ extension AppFeature {
           Button("Process text") { send(.tokenizeTapped) }
         }
       }
+      .onAppear {
+        send(.tokenizeTapped)
+      }
     }
   }
 }

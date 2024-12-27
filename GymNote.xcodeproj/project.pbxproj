@@ -33,9 +33,23 @@
 		E8BF97202D1E01A300967F6A /* GymNoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymNoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E8BF97582D1F4F0500967F6A /* Exceptions for "GymNote" folder in "GymNote" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ApiKeys.xcconfig,
+				Info.plist,
+			);
+			target = E8BF97052D1E01A100967F6A /* GymNote */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E8BF97082D1E01A100967F6A /* GymNote */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E8BF97582D1F4F0500967F6A /* Exceptions for "GymNote" folder in "GymNote" target */,
+			);
 			path = GymNote;
 			sourceTree = "<group>";
 		};
@@ -399,6 +413,8 @@
 		};
 		E8BF972B2D1E01A300967F6A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = E8BF97082D1E01A100967F6A /* GymNote */;
+			baseConfigurationReferenceRelativePath = ApiKeys.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -408,6 +424,7 @@
 				DEVELOPMENT_TEAM = 5LPLCZ2ALZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GymNote/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -429,6 +446,8 @@
 		};
 		E8BF972C2D1E01A300967F6A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = E8BF97082D1E01A100967F6A /* GymNote */;
+			baseConfigurationReferenceRelativePath = ApiKeys.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -438,6 +457,7 @@
 				DEVELOPMENT_TEAM = 5LPLCZ2ALZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GymNote/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
