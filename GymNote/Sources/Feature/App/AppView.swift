@@ -16,15 +16,17 @@ extension AppFeature {
     var body: some View {
       Form {
         Section {
-          TextField("Add text to process", text: $store.textToTokenize)
+          TextField("Add text to process", text: $store.input)
         }
 
         Section {
-          Button("Process text") { send(.tokenizeTapped) }
+          Button("Process text") { send(.extractReport) }
         }
       }
-      .onAppear {
-        send(.tokenizeTapped)
+      .sheet(
+        item: $store.scope(state: \.newRecordState, action: \.newRecord)
+      ) { store in
+        NewRecordFeature.MainView(store: store)
       }
     }
   }

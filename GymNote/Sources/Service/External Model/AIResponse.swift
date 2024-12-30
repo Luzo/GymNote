@@ -5,12 +5,6 @@
 //  Created by Lubos Lehota on 27/12/2024.
 //
 
-enum AIResponseError: Error {
-  case missingApiKey
-  case serializationError
-  case noResponse
-}
-
 struct AIResponse: Codable {
   let choices: [Choice]
 }

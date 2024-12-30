@@ -1,5 +1,5 @@
 //
-//  AppReducer.swift
+//  AppFeature.swift
 //  GymNote
 //
 //  Created by Lubos Lehota on 26/12/2024.
@@ -12,17 +12,20 @@ import NaturalLanguage
 struct AppFeature {
   @ObservableState
   struct State: Equatable {
-    var textToTokenize: String = "Tuesday I did 20 push ups with 10 kilos"
+    var input: String = "Tuesday I did 20 push ups with 10 kilos"
+    @Presents var newRecordState: NewRecordFeature.State?
   }
 
   enum Action: ViewAction {
     case view(View)
     case receivedAIResponse(Result<ExtractedReport, AIResponseError>)
+    case newRecord(PresentationAction<NewRecordFeature.Action>)
+
 
     @CasePathable
     public enum View: BindableAction, Sendable {
       case binding(BindingAction<State>)
-      case tokenizeTapped
+      case extractReport
     }
   }
 
@@ -31,8 +34,8 @@ struct AppFeature {
 
     Reduce { state, action in
       switch action {
-      case .view(.tokenizeTapped):
-        let text = state.textToTokenize
+      case .view(.extractReport):
+        let text = state.input
 
         return .run { send in
           @Dependency(\.groqService.extractReport) var extractReport
@@ -41,16 +44,22 @@ struct AppFeature {
         }
 
       case let .receivedAIResponse(.success(response)):
-        print(response)
+        state.newRecordState = .init(extractedReport: response)
         return .none
 
       case let .receivedAIResponse(.failure(error)):
+        // Add retry with the same or add new
         print(error)
         return .none
 
-      case .view:
+      case .view,
+        .newRecord:
+
         return .none
       }
+    }
+    .ifLet(\.$newRecordState, action: \.newRecord) {
+      NewRecordFeature()
     }
   }
 }

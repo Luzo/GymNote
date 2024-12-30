@@ -29,6 +29,7 @@ extension GroqService: DependencyKey {
       extractReport: { text in
         let decoder = JSONDecoder()
 
+        // TODO: create network layer, to be able to test this.
         guard
           let parameters = ExtractReport.prepareParameters(text: text).value,
           let inputJsonData = try? JSONSerialization.data(withJSONObject: parameters),
@@ -48,8 +49,8 @@ extension GroqService: DependencyKey {
         }
 
         do {
-          let extractedData = try decoder.decode(ExtractedReport.self, from: content)
-          return .success(extractedData)
+          let extractedData = try decoder.decode(ExtractedReportExternal.self, from: content)
+          return .success(extractedData.toDomainModel())
         } catch {
           return .failure(.noResponse)
         }
@@ -78,7 +79,7 @@ private extension GroqService.ExtractReport {
     "date": String?,
     "exercise": String?,
     "repetitions": Int?,
-    "weight": Int?,
+    "weight": Double?,
     "weightUnit": String?
     }
     

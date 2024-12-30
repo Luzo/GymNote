@@ -18,22 +18,31 @@
 			remoteGlobalIDString = E8BF97052D1E01A100967F6A;
 			remoteInfo = GymNote;
 		};
-		E8BF97212D1E01A300967F6A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E8BF96FE2D1E01A100967F6A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E8BF97052D1E01A100967F6A;
-			remoteInfo = GymNote;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E81502F32D22EE530083AB4F /* GymNote.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = GymNote.xctestplan; sourceTree = "<group>"; };
 		E8BF97062D1E01A100967F6A /* GymNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8BF97162D1E01A300967F6A /* GymNoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymNoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8BF97202D1E01A300967F6A /* GymNoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymNoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E819DC702D22F04A00E1621F /* Exceptions for "GymNoteTests" folder in "GymNote" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"TestUtils/Optional+unwrap.swift",
+				TestUtils/TestExpectation.swift,
+			);
+			target = E8BF97052D1E01A100967F6A /* GymNote */;
+		};
+		E819DC712D22F04A00E1621F /* Exceptions for "GymNoteTests" folder in "GymNoteTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"TestUtils/Optional+unwrap.swift",
+				TestUtils/TestExpectation.swift,
+			);
+			target = E8BF97152D1E01A300967F6A /* GymNoteTests */;
+		};
 		E8BF97582D1F4F0500967F6A /* Exceptions for "GymNote" folder in "GymNote" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -55,12 +64,11 @@
 		};
 		E8BF97192D1E01A300967F6A /* GymNoteTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E819DC702D22F04A00E1621F /* Exceptions for "GymNoteTests" folder in "GymNote" target */,
+				E819DC712D22F04A00E1621F /* Exceptions for "GymNoteTests" folder in "GymNoteTests" target */,
+			);
 			path = GymNoteTests;
-			sourceTree = "<group>";
-		};
-		E8BF97232D1E01A300967F6A /* GymNoteUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GymNoteUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -81,22 +89,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8BF971D2D1E01A300967F6A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		E8BF96FD2D1E01A100967F6A = {
 			isa = PBXGroup;
 			children = (
+				E81502F32D22EE530083AB4F /* GymNote.xctestplan */,
 				E8BF97082D1E01A100967F6A /* GymNote */,
 				E8BF97192D1E01A300967F6A /* GymNoteTests */,
-				E8BF97232D1E01A300967F6A /* GymNoteUITests */,
 				E8BF97072D1E01A100967F6A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,7 +107,6 @@
 			children = (
 				E8BF97062D1E01A100967F6A /* GymNote.app */,
 				E8BF97162D1E01A300967F6A /* GymNoteTests.xctest */,
-				E8BF97202D1E01A300967F6A /* GymNoteUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,29 +160,6 @@
 			productReference = E8BF97162D1E01A300967F6A /* GymNoteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E8BF971F2D1E01A300967F6A /* GymNoteUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E8BF97302D1E01A300967F6A /* Build configuration list for PBXNativeTarget "GymNoteUITests" */;
-			buildPhases = (
-				E8BF971C2D1E01A300967F6A /* Sources */,
-				E8BF971D2D1E01A300967F6A /* Frameworks */,
-				E8BF971E2D1E01A300967F6A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E8BF97222D1E01A300967F6A /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				E8BF97232D1E01A300967F6A /* GymNoteUITests */,
-			);
-			name = GymNoteUITests;
-			packageProductDependencies = (
-			);
-			productName = GymNoteUITests;
-			productReference = E8BF97202D1E01A300967F6A /* GymNoteUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,10 +174,6 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					E8BF97152D1E01A300967F6A = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = E8BF97052D1E01A100967F6A;
-					};
-					E8BF971F2D1E01A300967F6A = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = E8BF97052D1E01A100967F6A;
 					};
@@ -225,7 +198,6 @@
 			targets = (
 				E8BF97052D1E01A100967F6A /* GymNote */,
 				E8BF97152D1E01A300967F6A /* GymNoteTests */,
-				E8BF971F2D1E01A300967F6A /* GymNoteUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -239,13 +211,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E8BF97142D1E01A300967F6A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E8BF971E2D1E01A300967F6A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -269,13 +234,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E8BF971C2D1E01A300967F6A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -283,11 +241,6 @@
 			isa = PBXTargetDependency;
 			target = E8BF97052D1E01A100967F6A /* GymNote */;
 			targetProxy = E8BF97172D1E01A300967F6A /* PBXContainerItemProxy */;
-		};
-		E8BF97222D1E01A300967F6A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E8BF97052D1E01A100967F6A /* GymNote */;
-			targetProxy = E8BF97212D1E01A300967F6A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -515,40 +468,6 @@
 			};
 			name = Release;
 		};
-		E8BF97312D1E01A300967F6A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5LPLCZ2ALZ;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lubos.lehota.GymNoteUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GymNote;
-			};
-			name = Debug;
-		};
-		E8BF97322D1E01A300967F6A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5LPLCZ2ALZ;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lubos.lehota.GymNoteUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GymNote;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -575,15 +494,6 @@
 			buildConfigurations = (
 				E8BF972E2D1E01A300967F6A /* Debug */,
 				E8BF972F2D1E01A300967F6A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E8BF97302D1E01A300967F6A /* Build configuration list for PBXNativeTarget "GymNoteUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E8BF97312D1E01A300967F6A /* Debug */,
-				E8BF97322D1E01A300967F6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
