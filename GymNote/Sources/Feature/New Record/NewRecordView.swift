@@ -16,14 +16,20 @@ extension NewRecordFeature {
     var body: some View {
       VStack {
       Text("New Gym Record")
-
         Form {
           Section {
             DatePicker("Date of exercise", selection: $store.date, displayedComponents: .date)
-            LabeledContent("Exercise") {
-              TextField("Add Exercise", text: $store.exercise.unwrapOptionalToEmpty())
-                .multilineTextAlignment(.trailing)
+
+            Picker(
+              "Exercise",
+              selection: $store.exercise.toStringBinding(restrictedTo: store.allowedValuesExercise)
+            ) {
+              Text("Select weight unit").tag("")
+              ForEach(store.allowedValuesExercise, id: \.rawValue) { value in
+                Text(value.rawValue).tag(value.rawValue)
+              }
             }
+
             LabeledContent("Repetitions") {
               TextField("Add repetitions", text: $store.repetitions.toStringBinding())
                 .multilineTextAlignment(.trailing)
@@ -36,10 +42,10 @@ extension NewRecordFeature {
             }
             Picker(
               "Weight unit",
-              selection: $store.weightUnit.toStringBinding(restrictedTo: store.allowedValues)
+              selection: $store.weightUnit.toStringBinding(restrictedTo: store.allowedValuesWeight)
             ) {
               Text("Select weight unit").tag("")
-              ForEach(store.allowedValues, id: \.self) { value in
+              ForEach(store.allowedValuesWeight, id: \.self) { value in
                 Text(value.symbol).tag(value.symbol)
               }
             }
@@ -59,7 +65,7 @@ extension NewRecordFeature {
 #Preview {
   NewRecordFeature.MainView(
     store: .init(
-      initialState: .init(extractedReport: ExtractedReport(date: .init(), exercise: "Push ups")),
+      initialState: .init(extractedReport: ExtractedReport(date: .init(), exercise: .biceps(.chinup))),
       reducer: NewRecordFeature.init)
   )
 }

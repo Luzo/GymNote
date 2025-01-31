@@ -73,11 +73,12 @@ private extension GroqService.ExtractReport {
     let prompt = """
     Today's Date: \(today)
     Extract JSON data, without any other text in response, format json without any newlines. If day of the week is supplied, find the closest day of the week that passed.
-    Transform date in response to ISO 8601, unit in standard abbreviation:
+    Transform date in response to ISO 8601, unit in standard abbreviation.
+    \(prepareKnownExercisesPrompt()):
     
     {
     "date": String?,
-    "exercise": String?,
+    "exercise": Exercise?,
     "repetitions": Int?,
     "weight": Double?,
     "weightUnit": String?
@@ -118,5 +119,16 @@ private extension GroqService.ExtractReport {
     request.httpBody = inputJsonData
 
     return .success(request)
+  }
+
+  static func prepareKnownExercisesPrompt() -> String {
+    return """
+    The enum Exercise is defined as following, please replace extracted exercise with one of the folowing options,
+    if it matches or resembels something from Exercise enum. 
+    If not found, return it as unknown-string.
+    E.g. if received push ups - return chest-pushup and so on: 
+    
+    \(Exercise.allCases.map(\.rawValue))
+    """
   }
 }
