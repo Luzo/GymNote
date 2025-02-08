@@ -13,18 +13,16 @@ extension AppFeature {
   @ViewAction(for: AppFeature.self)
   struct MainView: View {
     @Bindable var store: StoreOf<AppFeature>
-    @Dependency(\.modelContainer) var modelContainer
 
     var body: some View {
       ListView(store: store)
-        .modelContainer(modelContainer)
+        .onAppear { send(.onAppear) }
     }
   }
 
   @ViewAction(for: AppFeature.self)
   struct ListView: View {
     @Bindable var store: StoreOf<AppFeature>
-    @Query private var records: [ExerciseRecord]
 
     var body: some View {
       Group {
@@ -38,23 +36,16 @@ extension AppFeature {
           }
 
           List {
-            ForEach(ExerciseGroup.allCases, id: \.rawValue) { muscleGroup in
-              let filteredExercises = records.filter { $0.exercise.group == muscleGroup }
-              let groupedExercises = Dictionary(grouping: filteredExercises, by: { $0.exercise.rawValue })
+            ForEach(store.records, id: \.self) { muscleGroup in
+              Section(header: Text(muscleGroup.name)) {
+                ForEach(muscleGroup.sections, id: \.self) { section in
+                  Text(section.name)
+                    .bold()
 
-              if !filteredExercises.isEmpty {
-                Section(header: Text(muscleGroup.rawValue)) {
-                  ForEach(groupedExercises.keys.sorted(), id: \.self) { exerciseName in
-                    let items = groupedExercises[exerciseName] ?? []
-
-                    Text(exerciseName)
-                      .bold()
-
-                    ForEach(items) { item in
-                      HStack {
-                        Text(item.date, style: .date)
-                        Text(item.weight.formatted(.measurement(width: .narrow)))
-                      }
+                  ForEach(section.records) { item in
+                    HStack {
+                      Text(item.date, style: .date)
+                      Text(item.weight.formatted(.measurement(width: .narrow)))
                     }
                   }
                 }
