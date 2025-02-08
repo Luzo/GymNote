@@ -31,6 +31,7 @@ struct AppFeature {
       case onAppear
       case binding(BindingAction<State>)
       case extractReport
+      case removeRecord(ExerciseRecord.ID)
     }
   }
 
@@ -105,6 +106,16 @@ private extension AppFeature {
 
     case .binding:
       return .none
+
+    case let .removeRecord(idToRemove):
+      @Dependency(\.modelContainer) var modelContainer
+
+      return .run { send in
+        try await MainActor.run {
+          let context = modelContainer.mainContext
+          try context.delete(model: ExerciseRecord.self, where: #Predicate { $0.id == idToRemove })
+        }
+      }
     }
   }
 
@@ -121,10 +132,7 @@ private extension AppFeature {
 
   func observeRecordChanges() -> Effect<Action> {
     return .run { send in
-      let stream = AsyncStream {
-        NotificationCenter.default.notifications(named: ModelContext.didSave)
-          .map { _ in }
-      }
+      let stream = AsyncStream { NotificationCenter.default.notifications(named: ModelContext.didSave) }
 
       for await _ in stream {
         await send(.recordsChanged)

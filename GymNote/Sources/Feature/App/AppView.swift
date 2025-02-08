@@ -47,6 +47,14 @@ extension AppFeature {
                       Text(item.date, style: .date)
                       Text(item.weight.formatted(.measurement(width: .narrow)))
                     }
+                    .swipeActions {
+                      Button {
+                        send(.removeRecord(item.id))
+                      } label: {
+                        Image(systemName: "xmark.bin.circle")
+                      }
+                      .tint(Color.red)
+                    }
                   }
                 }
               }

@@ -5,11 +5,13 @@
 //  Created by Lubos Lehota on 29/12/2024.
 //
 
+import Dependencies
 import Foundation
 import SwiftData
 
 @Model
-class ExerciseRecord: Equatable {
+class ExerciseRecord: Equatable, Identifiable {
+  var id: String
   var date: Date
   var exercise: Exercise
   var repetitions: Int
@@ -23,6 +25,9 @@ class ExerciseRecord: Equatable {
   private var weightSymbol: String
 
   init(date: Date, exercise: Exercise, repetitions: Int, weight: Measurement<UnitMass>) {
+    @Dependency(\.uuid) var uuid
+
+    self.id = uuid().uuidString
     self.date = date
     self.exercise = exercise
     self.repetitions = repetitions
