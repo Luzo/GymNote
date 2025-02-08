@@ -42,28 +42,21 @@ extension AppFeature {
               let filteredExercises = records.filter { $0.exercise.group == muscleGroup }
               let groupedExercises = Dictionary(grouping: filteredExercises, by: { $0.exercise.rawValue })
 
-              // TODO: style better + hide empty sections
-              Section(header: Text(muscleGroup.rawValue)) {
-                ForEach(groupedExercises.keys.sorted(), id: \.self) { exerciseName in
-                  let items = groupedExercises[exerciseName] ?? []
+              if !filteredExercises.isEmpty {
+                Section(header: Text(muscleGroup.rawValue)) {
+                  ForEach(groupedExercises.keys.sorted(), id: \.self) { exerciseName in
+                    let items = groupedExercises[exerciseName] ?? []
 
-                  Section(
-                    content: {
-                      ForEach(items) { item in
-                        HStack {
-                          Text(item.date, style: .date)
-                          Text(item.weight.formatted(.measurement(width: .narrow)))
-                        }
+                    Text(exerciseName)
+                      .bold()
+
+                    ForEach(items) { item in
+                      HStack {
+                        Text(item.date, style: .date)
+                        Text(item.weight.formatted(.measurement(width: .narrow)))
                       }
-                    },
-                    header: {
-                      Text(exerciseName)
-                        .bold()
-                    },
-                    footer: {
-                      EmptyView()
                     }
-                  )
+                  }
                 }
               }
             }
