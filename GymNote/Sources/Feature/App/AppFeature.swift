@@ -121,14 +121,13 @@ private extension AppFeature {
 
   func observeRecordChanges() -> Effect<Action> {
     return .run { send in
-      NotificationCenter.default.addObserver(
-        forName: ModelContext.didSave,
-        object: nil,
-        queue: .main
-      ) { _ in
-        Task {
-          await send(.recordsChanged)
-        }
+      let stream = AsyncStream {
+        NotificationCenter.default.notifications(named: ModelContext.didSave)
+          .map { _ in }
+      }
+
+      for await _ in stream {
+        await send(.recordsChanged)
       }
     }
     .cancellable(id: Cancellable.observeRecordChange, cancelInFlight: true)
