@@ -15,6 +15,7 @@ struct AppFeature {
   struct State: Equatable {
     var input: String = "Tuesday I did 20 push ups with 10 kilos"
     var records: [ExerciseMuscleGroupSection] = []
+    var isRecognizing: Bool = false
 
     @Presents var newRecordState: NewRecordFeature.State?
   }
@@ -25,6 +26,8 @@ struct AppFeature {
     case newRecord(PresentationAction<NewRecordFeature.Action>)
     case receivedSavedRecords([ExerciseRecord])
     case recordsChanged
+    case recognizedTextResult(Result<String, SpeechRecognizer.RecognizerError>)
+
 
     @CasePathable
     public enum ViewAction: BindableAction, Sendable {
@@ -32,6 +35,7 @@ struct AppFeature {
       case binding(BindingAction<State>)
       case extractReport
       case removeRecord(ExerciseRecord.ID)
+      case startStopRecording
     }
   }
 
@@ -45,7 +49,7 @@ struct AppFeature {
     Reduce { state, action in
       switch action {
       case let .view(viewAction):
-        return handleViewAction(viewAction, state: state)
+        return handleViewAction(viewAction, state: &state)
 
       case let .receivedAIResponse(.success(response)):
         state.newRecordState = .init(extractedReport: response)
@@ -78,6 +82,18 @@ struct AppFeature {
 
       case .newRecord:
         return .none
+
+      case let .recognizedTextResult(result):
+        switch result {
+        case let .success(recognizedText):
+          state.input = recognizedText
+
+        case let .failure(error):
+          // TODO: Show error to user?
+          print(error)
+        }
+
+        return .none
       }
     }
     .ifLet(\.$newRecordState, action: \.newRecord) {
@@ -87,7 +103,7 @@ struct AppFeature {
 }
 
 private extension AppFeature {
-  func handleViewAction(_ action: Action.ViewAction, state: State) -> Effect<Action> {
+  func handleViewAction(_ action: Action.ViewAction, state: inout State) -> Effect<Action> {
     switch action {
     case .onAppear:
       return .merge(
@@ -115,6 +131,17 @@ private extension AppFeature {
           let context = modelContainer.mainContext
           try context.delete(model: ExerciseRecord.self, where: #Predicate { $0.id == idToRemove })
         }
+      }
+
+    case .startStopRecording:
+      state.isRecognizing.toggle()
+
+      @Dependency(\.speechRecognizerService) var speechRecognizerService
+      let isRecognizing = state.isRecognizing
+      return .run { send in
+        isRecognizing
+        ? await send(.recognizedTextResult(await speechRecognizerService.recognizeText()))
+        : await speechRecognizerService.stopRecognizing()
       }
     }
   }

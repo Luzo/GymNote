@@ -15,8 +15,14 @@ extension AppFeature {
     @Bindable var store: StoreOf<AppFeature>
 
     var body: some View {
-      ListView(store: store)
-        .onAppear { send(.onAppear) }
+      ZStack(alignment: .bottom) {
+        ListView(store: store)
+          .onAppear { send(.onAppear) }
+
+        Button(store.isRecognizing == false ? "Start recording" : "Stop recording") {
+          send(.startStopRecording)
+        }
+      }
     }
   }
 
