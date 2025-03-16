@@ -40,4 +40,13 @@ class ExerciseRecord: Equatable, Identifiable {
     weightNumber = weight.value
     weightSymbol = weight.unit.symbol
   }
+
+  static func == (lhs: ExerciseRecord, rhs: ExerciseRecord) -> Bool {
+    return lhs.id == rhs.id &&
+    lhs.date == rhs.date &&
+    lhs.exercise == rhs.exercise &&
+    lhs.repetitions == rhs.repetitions &&
+    lhs.weightNumber == rhs.weightNumber &&
+    lhs.weightSymbol == rhs.weightSymbol
+  }
 }

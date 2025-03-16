@@ -124,13 +124,10 @@ private extension AppFeature {
       return .none
 
     case let .removeRecord(idToRemove):
-      @Dependency(\.modelContainer) var modelContainer
+      @Dependency(\.exerciseRecordContainerService) var exerciseRecordContainerService
 
       return .run { send in
-        try await MainActor.run {
-          let context = modelContainer.mainContext
-          try context.delete(model: ExerciseRecord.self, where: #Predicate { $0.id == idToRemove })
-        }
+        try await exerciseRecordContainerService.delete(idToRemove)
       }
 
     case .startStopRecording:
@@ -147,13 +144,11 @@ private extension AppFeature {
   }
 
   func fetchRecords() -> Effect<Action> {
-    @Dependency(\.modelContainer) var modelContainer
+    @Dependency(\.exerciseRecordContainerService) var exerciseRecordContainerService
 
     return .run { send in
-      try await MainActor.run {
-        let context = modelContainer.mainContext
-        send(.receivedSavedRecords(try context.fetch(FetchDescriptor<ExerciseRecord>())))
-      }
+      let records = try await exerciseRecordContainerService.fetchAll()
+      await send(.receivedSavedRecords(records))
     }
   }
 

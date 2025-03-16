@@ -18,7 +18,7 @@ struct AppFeatureTests {
       reducer: AppFeature.init,
       withDependencies: {
         $0.groqService.extractReport = { _ in
-          .failure(.noResponse)
+            .failure(.networkError(.noData))
         }
       }
     )

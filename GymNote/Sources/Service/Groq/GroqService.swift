@@ -27,39 +27,28 @@ extension GroqService: DependencyKey {
   static var liveValue: GroqService {
     .init(
       extractReport: { text in
-        let decoder = JSONDecoder()
+        @Dependency(\.networkService) var networkService
 
-        // TODO: create network layer, to be able to test this.
-        guard
-          let parameters = ExtractReport.prepareParameters(text: text).value,
-          let inputJsonData = try? JSONSerialization.data(withJSONObject: parameters),
-          let request = ExtractReport.prepareURLRequest(inputJsonData: inputJsonData).value,
-          let (data, _) = try? await URLSession.shared.data(for: request),
-          let aiResponse = try? decoder.decode(AIResponse.self, from: data)
-        else {
-          return .failure(AIResponseError.serializationError)
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "apiKeyGroq") as? String else {
+          return .failure(.missingApiKey)
         }
 
-        let message = aiResponse.choices.compactMap(\.message).first(where: { $0.role == .assistant })
+        let result: Result<AIResponse, NetworkError> = await networkService.request(
+          endpoint: "https://api.groq.com/openai/v1/chat/completions",
+          method: .post,
+          parameters: (try? ExtractReport.prepareParameters(text: text).get()) ?? [:],
+          headers: ["Authorization": "Bearer \(apiKey)"]
+        )
 
-        guard
-          let content = message?.content.data(using: .utf8)
-        else {
-          return .failure(AIResponseError.noResponse)
-        }
-
-        do {
-          let extractedData = try decoder.decode(ExtractedReportExternal.self, from: content)
-          return .success(extractedData.toDomainModel())
-        } catch {
-          return .failure(.noResponse)
-        }
+        return result
+          .mapError(AIResponseError.networkError)
+          .flatMap(ExtractReport.decodeAIResponse)
       }
     )
   }
 
   static var previewValue: GroqService {
-    .init(extractReport: { _ in .failure(.noResponse) })
+    .init(extractReport: { _ in .failure(.networkError(.noData)) })
   }
 
   static var testValue: GroqService {
@@ -104,23 +93,6 @@ private extension GroqService.ExtractReport {
     return .success(parameters)
   }
 
-  static func prepareURLRequest(inputJsonData: Data) -> Result<URLRequest, AIResponseError> {
-    let url = URL(string: "https://api.groq.com/openai/v1/chat/completions")!
-
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-
-    guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "apiKeyGroq") as? String else {
-      return .failure(.missingApiKey)
-    }
-
-    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.httpBody = inputJsonData
-
-    return .success(request)
-  }
-
   static func prepareKnownExercisesPrompt() -> String {
     return """
     The enum Exercise is defined as following, please replace extracted exercise with one of the folowing options,
@@ -130,5 +102,20 @@ private extension GroqService.ExtractReport {
     
     \(Exercise.allCases.map(\.rawValue))
     """
+  }
+
+  static func decodeAIResponse(_ aiResponse: AIResponse) -> Result<ExtractedReport, AIResponseError> {
+    let message = aiResponse.choices.compactMap(\.message).first(where: { $0.role == .assistant })
+
+    guard let content = message?.content.data(using: .utf8) else {
+      return .failure(.networkError(.noData))
+    }
+
+    do {
+      let extractedData = try JSONDecoder().decode(ExtractedReportExternal.self, from: content)
+      return .success(extractedData.toDomainModel())
+    } catch {
+      return .failure(.networkError(.decodingError))
+    }
   }
 }

@@ -17,7 +17,6 @@ struct NewRecordFeature {
     let allowedValuesWeight: [UnitMass] = UnitMass.appAllowed
     let allowedValuesExercise: [Exercise] = Exercise.allCases
 
-    var finalizedReport: ExerciseRecord?
     var date: Date
     var exercise: Exercise?
     var repetitions: Int?
@@ -73,16 +72,11 @@ struct NewRecordFeature {
           weight: Measurement<UnitMass>.init(value: weight, unit: weightUnit)
         )
 
-        @Dependency(\.modelContainer) var modelContainer
+        @Dependency(\.exerciseRecordContainerService) var exerciseRecordContainerService
 
         return .run { send in
-          try await MainActor.run {
-            let context = modelContainer.mainContext
-            context.insert(record)
-            try context.save()
-
-            send(.recordSaved)
-          }
+          try await exerciseRecordContainerService.save(record)
+          await send(.recordSaved)
         }
 
       case .view:
