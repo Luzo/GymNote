@@ -44,7 +44,12 @@ extension ExerciseRecordContainerService: DependencyKey {
       delete: { recordID in
         try await MainActor.run {
           let context = modelContainer.mainContext
-          try context.delete(model: ExerciseRecord.self, where: #Predicate { $0.id == recordID })
+          let descriptor = FetchDescriptor<ExerciseRecord>(predicate: #Predicate { $0.id == recordID })
+          let records = try context.fetch(descriptor)
+          for record in records {
+            context.delete(record)
+          }
+          try context.save()
         }
       }
     )

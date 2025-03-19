@@ -154,7 +154,7 @@ private extension AppFeature {
 
   func observeRecordChanges() -> Effect<Action> {
     return .run { send in
-      let stream = AsyncStream { NotificationCenter.default.notifications(named: ModelContext.didSave) }
+      let stream = NotificationCenter.default.notifications(named: ModelContext.didSave)
 
       for await _ in stream {
         await send(.recordsChanged)
