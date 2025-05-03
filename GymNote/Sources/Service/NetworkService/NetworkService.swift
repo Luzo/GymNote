@@ -44,27 +44,22 @@ protocol NetworkServiceProvider {
     endpoint: String,
     method: RequestMethod,
     parameters: [String: Any],
-    headers: [String: String]
+    headers: [String: String],
+    session: URLSession
   ) async -> Result<T, NetworkError>
 }
 
 final class NetworkService: NetworkServiceProvider {
-  private let session: URLSession
-
-  fileprivate init(session: URLSession = .shared) {
-    self.session = session
-  }
-
   func request<T: Decodable>(
     endpoint: String,
     method: RequestMethod,
     parameters: [String: Any],
-    headers: [String: String]
+    headers: [String: String],
+    session: URLSession
   ) async -> Result<T, NetworkError> {
     guard let url = URL(string: endpoint) else {
       return .failure(.invalidURL)
     }
-
     var request = URLRequest(url: url)
     request.httpMethod = method.rawValue
 

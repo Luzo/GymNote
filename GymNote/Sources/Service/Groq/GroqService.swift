@@ -37,7 +37,11 @@ extension GroqService: DependencyKey {
           endpoint: "https://api.groq.com/openai/v1/chat/completions",
           method: .post,
           parameters: (try? ExtractReport.prepareParameters(text: text).get()) ?? [:],
-          headers: ["Authorization": "Bearer \(apiKey)"]
+          headers: ["Authorization": "Bearer \(apiKey)"],
+          // NOTE: without ephemeral session groq calls are failing.
+          // Not sure yet why, but according ot the logs, it seems
+          // that QUIC protocol tries to reuse already closed connection
+          session: URLSession(configuration: .ephemeral)
         )
 
         return result
