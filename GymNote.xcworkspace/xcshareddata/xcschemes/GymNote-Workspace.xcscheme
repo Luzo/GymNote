@@ -20,6 +20,20 @@
                ReferencedContainer = "container:GymNote.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "67D537B5931CB00E2638A627"
+               BuildableName = "GymNoteTests.xctest"
+               BlueprintName = "GymNoteTests"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

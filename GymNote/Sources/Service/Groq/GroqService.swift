@@ -87,7 +87,7 @@ private extension GroqService.ExtractReport {
           "content": prompt,
         ]
       ],
-      "model": "llama3-70b-8192",
+      "model": "deepseek-r1-distill-llama-70b",
       "temperature": 1,
       "max_tokens": 1024,
       "top_p": 1,
