@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Result {
+public extension Result {
   var value: Success? {
     switch self {
     case .success(let value):

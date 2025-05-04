@@ -5,15 +5,25 @@
 //  Created by Lubos Lehota on 27/12/2024.
 //
 
+import Exercise
 import Foundation
 import Dependencies
+import Utils
 
-struct ExtractedReport: Equatable {
-  var date: Date
-  var exercise: Exercise?
-  var repetitions: Int?
-  var weight: Double?
-  var weightUnit: UnitMass?
+public struct ExtractedReport: Equatable {
+  public var date: Date
+  public var exercise: Exercise?
+  public var repetitions: Int?
+  public var weight: Double?
+  public var weightUnit: UnitMass?
+
+  public init(date: Date, exercise: Exercise? = nil, repetitions: Int? = nil, weight: Double? = nil, weightUnit: UnitMass? = nil) {
+    self.date = date
+    self.exercise = exercise
+    self.repetitions = repetitions
+    self.weight = weight
+    self.weightUnit = weightUnit
+  }
 }
 
 extension ExtractedReportExternal: DomainMappable {

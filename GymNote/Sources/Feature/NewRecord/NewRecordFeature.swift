@@ -5,15 +5,20 @@
 //  Created by Lubos Lehota on 26/12/2024.
 //
 
+import CasePaths
 import ComposableArchitecture
 import Foundation
 import Dependencies
+import Exercise
+import Service
 import SwiftData
 
 @Reducer
-struct NewRecordFeature {
+public struct NewRecordFeature {
+  public init() {}
+
   @ObservableState
-  struct State: Equatable {
+  public struct State: Equatable {
     let allowedValuesWeight: [UnitMass] = UnitMass.appAllowed
     let allowedValuesExercise: [Exercise] = Exercise.allCases
 
@@ -23,7 +28,7 @@ struct NewRecordFeature {
     var weight: Double?
     var weightUnit: UnitMass?
 
-    init(extractedReport: ExtractedReport) {
+    public init(extractedReport: ExtractedReport) {
       self.date = extractedReport.date
       self.exercise = extractedReport.exercise
       self.repetitions = extractedReport.repetitions
@@ -34,18 +39,18 @@ struct NewRecordFeature {
     }
   }
 
-  enum Action: ViewAction {
+  public enum Action: ViewAction {
     case recordSaved
-    case view(View)
+    case view(ViewAction)
 
     @CasePathable
-    public enum View: BindableAction, Sendable {
+    public enum ViewAction: BindableAction, Sendable {
       case binding(BindingAction<State>)
       case finalizeReport
     }
   }
 
-  var body: some Reducer<State, Action> {
+  public var body: some ReducerOf<Self> {
     BindingReducer(action: \.view)
 
     Reduce { state, action in
@@ -65,7 +70,10 @@ struct NewRecordFeature {
           return .none
         }
 
+        @Dependency(\.uuid) var uuid
+
         let record = ExerciseRecord(
+          uuid: uuid(),
           date: state.date,
           exercise: exercise,
           repetitions: repetitions,

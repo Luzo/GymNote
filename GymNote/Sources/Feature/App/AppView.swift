@@ -5,16 +5,21 @@
 //  Created by Lubos Lehota on 26/12/2024.
 //
 
+import CasePaths
 import ComposableArchitecture
 import SwiftData
 import SwiftUI
 
 extension AppFeature {
   @ViewAction(for: AppFeature.self)
-  struct MainView: View {
-    @Bindable var store: StoreOf<AppFeature>
+  public struct MainView: View {
+    @Bindable public var store: StoreOf<AppFeature>
 
-    var body: some View {
+    public init(store: StoreOf<AppFeature>) {
+      self.store = store
+    }
+
+    public var body: some View {
       ZStack(alignment: .bottom) {
         ListView(store: store)
           .onAppear { send(.onAppear) }
@@ -67,11 +72,11 @@ extension AppFeature {
             }
           }
         }
-        .sheet(
-          item: $store.scope(state: \.newRecordState, action: \.newRecord)
-        ) { store in
-          NewRecordFeature.MainView(store: store)
-        }
+//        .sheet(
+//          item: $store.scope(state: \.newRecordState, action: \.newRecord)
+//        ) { store in
+//          NewRecordFeature.MainView(store: store)
+//        }
       }
     }
   }

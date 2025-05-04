@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Binding {
+public extension Binding {
   func toStringBinding<Wrapped: LosslessStringConvertible>() -> Binding<String> where Value == Optional<Wrapped> {
     Binding<String>(
       get: {
@@ -28,7 +28,7 @@ extension Binding {
   }
 }
 
-extension Binding {
+public extension Binding {
   func unwrapOptionalToEmpty() -> Binding<String> where Value == Optional<String> {
     Binding<String>(
       get: {
@@ -45,7 +45,7 @@ extension Binding {
   }
 }
 
-extension Binding {
+public extension Binding {
   func toStringBinding<Wrapped: Unit>(restrictedTo allowedValues: [Wrapped]) -> Binding<String> where Value == Optional<Wrapped> {
     Binding<String>(
       get: {
@@ -57,21 +57,6 @@ extension Binding {
       },
       set: { newValue in
         self.wrappedValue = allowedValues.first(where: { $0.symbol == newValue })
-      }
-    )
-  }
-
-  func toStringBinding(restrictedTo allowedValues: [Exercise]) -> Binding<String> where Value == Optional<Exercise> {
-    Binding<String>(
-      get: {
-        if let value = allowedValues.first(where: { $0.rawValue == self.wrappedValue?.rawValue }) {
-          return value.rawValue
-        } else {
-          return ""
-        }
-      },
-      set: { newValue in
-        self.wrappedValue = allowedValues.first(where: { $0.rawValue == newValue })
       }
     )
   }

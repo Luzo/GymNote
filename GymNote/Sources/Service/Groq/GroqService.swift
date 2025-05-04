@@ -6,10 +6,11 @@
 //
 
 import Dependencies
+import Exercise
 import Foundation
 
-struct GroqService {
-  var extractReport: (String) async -> Result<ExtractedReport, AIResponseError>
+public struct GroqService {
+  public var extractReport: (String) async -> Result<ExtractedReport, AIResponseError>
 }
 
 private extension GroqService {
@@ -17,14 +18,14 @@ private extension GroqService {
 }
 
 extension DependencyValues {
-  var groqService: GroqService {
+  public var groqService: GroqService {
     get { self[GroqService.self] }
     set { self[GroqService.self] = newValue }
   }
 }
 
 extension GroqService: DependencyKey {
-  static var liveValue: GroqService {
+  public static var liveValue: GroqService {
     .init(
       extractReport: { text in
         @Dependency(\.networkService) var networkService
@@ -51,11 +52,11 @@ extension GroqService: DependencyKey {
     )
   }
 
-  static var previewValue: GroqService {
+  public static var previewValue: GroqService {
     .init(extractReport: { _ in .failure(.networkError(.noData)) })
   }
 
-  static var testValue: GroqService {
+  public static var testValue: GroqService {
     .init(extractReport: { _ in fatalError("extractReport not mocked") })
   }
 }
@@ -87,7 +88,7 @@ private extension GroqService.ExtractReport {
           "content": prompt,
         ]
       ],
-      "model": "llama3-70b-8192",
+      "model": "deepseek-r1-distill-llama-70b",
       "temperature": 1,
       "max_tokens": 1024,
       "top_p": 1,

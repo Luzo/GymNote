@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension UnitMass {
+public extension UnitMass {
   static var appAllowed: [UnitMass] { [.kilograms, .pounds] }
   static func allowedOrDefaultUnit(for weightSymbol: String) -> UnitMass {
     appAllowed.first { $0.symbol == weightSymbol } ?? appAllowed[0]

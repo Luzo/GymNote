@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 
 // MARK: - NetworkError
-enum NetworkError: Error, Equatable {
+public enum NetworkError: Error, Equatable {
   case invalidURL
   case noData
   case decodingError
