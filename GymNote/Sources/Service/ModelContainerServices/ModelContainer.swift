@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import Exercise
 import Foundation
 import SwiftData
 

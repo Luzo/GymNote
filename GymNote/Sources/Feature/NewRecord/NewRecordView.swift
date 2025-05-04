@@ -5,15 +5,23 @@
 //  Created by Lubos Lehota on 29/12/2024.
 //
 
+import CasePaths
 import ComposableArchitecture
+import Exercise
+import Service
 import SwiftUI
+import Utils
 
 extension NewRecordFeature {
-  @ViewAction(for: AppFeature.self)
-  struct MainView: View {
-    @Bindable var store: StoreOf<NewRecordFeature>
+  @ViewAction(for: NewRecordFeature.self)
+  public struct MainView: View {
+    @Bindable public var store: StoreOf<NewRecordFeature>
 
-    var body: some View {
+    public init(store: StoreOf<NewRecordFeature>) {
+      self.store = store
+    }
+
+    public var body: some View {
       VStack {
       Text("New Gym Record")
         Form {

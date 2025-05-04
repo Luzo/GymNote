@@ -14,6 +14,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF4BA07C7BE6053EDE55EA10"
+               BuildableName = "App.framework"
+               BlueprintName = "App"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9234121B69DAD874D36CE695"
+               BuildableName = "Exercise.framework"
+               BlueprintName = "Exercise"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "45ABC3C418EF321FC57F50E7"
                BuildableName = "GymNote.app"
                BlueprintName = "GymNote"
@@ -31,6 +59,48 @@
                BlueprintIdentifier = "67D537B5931CB00E2638A627"
                BuildableName = "GymNoteTests.xctest"
                BlueprintName = "GymNoteTests"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "94BA3705C0F364E41D5E4FED"
+               BuildableName = "NewRecord.framework"
+               BlueprintName = "NewRecord"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2FB939D3AE8752F4704A8B24"
+               BuildableName = "Service.framework"
+               BlueprintName = "Service"
+               ReferencedContainer = "container:GymNote.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FE1AA0DA431E11171757A80F"
+               BuildableName = "Utils.framework"
+               BlueprintName = "Utils"
                ReferencedContainer = "container:GymNote.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,16 +135,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "45ABC3C418EF321FC57F50E7"
-            BuildableName = "GymNote.app"
-            BlueprintName = "GymNote"
+            BlueprintIdentifier = "FF4BA07C7BE6053EDE55EA10"
+            BuildableName = "App.framework"
+            BlueprintName = "App"
             ReferencedContainer = "container:GymNote.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -82,16 +151,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "45ABC3C418EF321FC57F50E7"
-            BuildableName = "GymNote.app"
-            BlueprintName = "GymNote"
+            BlueprintIdentifier = "FF4BA07C7BE6053EDE55EA10"
+            BuildableName = "App.framework"
+            BlueprintName = "App"
             ReferencedContainer = "container:GymNote.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

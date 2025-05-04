@@ -5,7 +5,7 @@
 //  Created by Lubos Lehota on 08/02/2025.
 //
 
-extension Exercise {
+public extension Exercise {
   enum Chest: String, Equatable, Codable, CaseIterable {
     case pushup = "chest-pushup"
     case benchPress = "chest-benchPress"
@@ -21,7 +21,7 @@ extension Exercise {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   enum Biceps: String, Equatable, Codable, CaseIterable {
     case hammerCurl = "biceps-hammerCurl"
     case preacherCurl = "biceps-preacherCurl"
@@ -31,7 +31,7 @@ extension Exercise {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   enum Triceps: String, Equatable, Codable, CaseIterable {
     case dips = "triceps-dips"
     case machineDips = "triceps-machineDips"
@@ -41,7 +41,7 @@ extension Exercise {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   enum Back: String, Equatable, Codable, CaseIterable {
     case pullup = "back-pullup"
     case cableRow = "back-cableRow"
@@ -53,7 +53,7 @@ extension Exercise {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   enum Shoulders: String, Equatable, Codable, CaseIterable {
     case shoulderPress = "shoulders-shoulderPress"
     case overheadPress = "shoulders-overheadPress"
@@ -68,7 +68,7 @@ extension Exercise {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   enum Legs: String, Equatable, Codable, CaseIterable {
     case legPress = "legs-legPress"
     case squats = "legs-squats"

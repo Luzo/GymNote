@@ -5,22 +5,31 @@
 //  Created by Lubos Lehota on 26/12/2024.
 //
 
+import CasePaths
 import ComposableArchitecture
+import Dependencies
+import Exercise
 import NaturalLanguage
+import NewRecord
+import Service
 import SwiftData
 
 @Reducer
-struct AppFeature {
+public struct AppFeature {
+  public init() {}
+
   @ObservableState
-  struct State: Equatable {
+  public struct State: Equatable {
     var input: String = "Tuesday I did 20 push ups with 10 kilos"
     var records: [ExerciseMuscleGroupSection] = []
     var isRecognizing: Bool = false
 
     @Presents var newRecordState: NewRecordFeature.State?
+
+    public init() {}
   }
 
-  enum Action: ViewAction {
+  public enum Action: ViewAction {
     case view(ViewAction)
     case receivedAIResponse(Result<ExtractedReport, AIResponseError>)
     case newRecord(PresentationAction<NewRecordFeature.Action>)
@@ -43,7 +52,7 @@ struct AppFeature {
     case observeRecordChange
   }
 
-  var body: some Reducer<State, Action> {
+  public var body: some Reducer<State, Action> {
     BindingReducer(action: \.view)
 
     Reduce { state, action in

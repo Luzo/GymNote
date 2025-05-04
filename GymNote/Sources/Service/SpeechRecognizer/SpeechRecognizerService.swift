@@ -11,20 +11,20 @@ import AVFoundation
 import Speech
 import SwiftUI
 
-struct SpeechRecognizerService {
-  var recognizeText: () async -> Result<String, SpeechRecognizer.RecognizerError>
-  var stopRecognizing: () async -> Void
+public struct SpeechRecognizerService {
+  public var recognizeText: () async -> Result<String, SpeechRecognizer.RecognizerError>
+  public var stopRecognizing: () async -> Void
 }
 
 extension DependencyValues {
-  var speechRecognizerService: SpeechRecognizerService {
+  public var speechRecognizerService: SpeechRecognizerService {
     get { self[SpeechRecognizerService.self] }
     set { self[SpeechRecognizerService.self] = newValue }
   }
 }
 
 extension SpeechRecognizerService: DependencyKey {
-  static var liveValue: SpeechRecognizerService {
+  public static var liveValue: SpeechRecognizerService {
     return .init(
       recognizeText: {
         let speechRecognizer = await SpeechRecognizer.initialize()
@@ -47,19 +47,19 @@ extension SpeechRecognizerService: DependencyKey {
   }
 
   // TODO: Implement previewValue and testValue
-  static var previewValue: SpeechRecognizerService {
+  public static var previewValue: SpeechRecognizerService {
     .liveValue
   }
 
-  static var testValue: SpeechRecognizerService {
+  public static var testValue: SpeechRecognizerService {
     .liveValue
   }
 }
 
 // TODO: check for further optimizations of calls - this is basically v.2 from example from Apple
-actor SpeechRecognizer {
+public actor SpeechRecognizer {
   // TODO: this should be domain independent
-  enum RecognizerError: Error {
+  public enum RecognizerError: Error {
     case nilRecognizer
     case notAuthorizedToRecognize
     case notPermittedToRecord

@@ -5,18 +5,18 @@
 //  Created by Lubos Lehota on 29/12/2024.
 //
 
-import Dependencies
 import Foundation
+import Utils
 import SwiftData
 
 @Model
-class ExerciseRecord: Equatable, Identifiable {
-  var id: String
-  var date: Date
-  var exercise: Exercise
-  var repetitions: Int
+public class ExerciseRecord: Equatable, Identifiable {
+  public var id: String
+  public var date: Date
+  public var exercise: Exercise
+  public var repetitions: Int
   @Transient
-  var weight: Measurement<UnitMass> {
+  public var weight: Measurement<UnitMass> {
     get { .init(value: weightNumber, unit: UnitMass.allowedOrDefaultUnit(for: weightSymbol)) }
     set { setWeight(newValue) }
   }
@@ -24,10 +24,8 @@ class ExerciseRecord: Equatable, Identifiable {
   private var weightNumber: Double
   private var weightSymbol: String
 
-  init(date: Date, exercise: Exercise, repetitions: Int, weight: Measurement<UnitMass>) {
-    @Dependency(\.uuid) var uuid
-
-    self.id = uuid().uuidString
+  public init(uuid: UUID, date: Date, exercise: Exercise, repetitions: Int, weight: Measurement<UnitMass>) {
+    self.id = uuid.uuidString
     self.date = date
     self.exercise = exercise
     self.repetitions = repetitions
@@ -41,7 +39,7 @@ class ExerciseRecord: Equatable, Identifiable {
     weightSymbol = weight.unit.symbol
   }
 
-  static func == (lhs: ExerciseRecord, rhs: ExerciseRecord) -> Bool {
+  public static func == (lhs: ExerciseRecord, rhs: ExerciseRecord) -> Bool {
     return lhs.id == rhs.id &&
     lhs.date == rhs.date &&
     lhs.exercise == rhs.exercise &&

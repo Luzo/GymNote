@@ -5,7 +5,7 @@
 //  Created by Lubos Lehota on 29/12/2024.
 //
 
-enum ExerciseGroup: String, Equatable, CaseIterable {
+public enum ExerciseGroup: String, Equatable, CaseIterable {
   case chest
   case biceps
   case triceps
@@ -14,7 +14,7 @@ enum ExerciseGroup: String, Equatable, CaseIterable {
   case legs
 }
 
-enum Exercise: Equatable {
+public enum Exercise: Equatable {
   case chest(Chest)
   case biceps(Biceps)
   case triceps(Triceps)
@@ -24,7 +24,7 @@ enum Exercise: Equatable {
 }
 
 extension Exercise: Codable {
-  init?(rawValue: String) {
+  public init?(rawValue: String) {
     guard
       let prefix = rawValue.split(separator: "-").first,
       let group = ExerciseGroup.init(rawValue: String(prefix)),
@@ -38,7 +38,7 @@ extension Exercise: Codable {
 }
 
 extension Exercise: RawRepresentable {
-  var rawValue: String {
+  public var rawValue: String {
     switch self {
     case let .chest(exercise):
       return exercise.rawValue
@@ -56,7 +56,7 @@ extension Exercise: RawRepresentable {
   }
 }
 
-extension Exercise {
+public extension Exercise {
   static var allCases: [Exercise] {
     ExerciseGroup.allCases.flatMap { group in
       switch group {
