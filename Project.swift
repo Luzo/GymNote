@@ -20,18 +20,18 @@ public enum Feature: CaseIterable {
       return [
         Domain.exercise.targetDependency,
         Feature.newRecord.targetDependency,
-        Package.casePaths.package,
-        Package.composableArchitecture.package,
-        Package.dependencies.package,
+        Package.casePaths.packageDependency,
+        Package.composableArchitecture.packageDependency,
+        Package.dependencies.packageDependency,
         Service.targetDependency,
       ]
 
     case .newRecord:
       return [
         Domain.exercise.targetDependency,
-        Package.casePaths.package,
-        Package.composableArchitecture.package,
-        Package.dependencies.package,
+        Package.casePaths.packageDependency,
+        Package.composableArchitecture.packageDependency,
+        Package.dependencies.packageDependency,
         Service.targetDependency,
         Utils.targetDependency,
       ]
@@ -131,7 +131,7 @@ public enum Service: CaseIterable {
       sources: ["GymNote/Sources/\(name)/**"],
       dependencies: [
         Domain.exercise.targetDependency,
-        Package.dependencies.package,
+        Package.dependencies.packageDependency,
       ]
     )
   }
@@ -155,7 +155,20 @@ public enum Package: CaseIterable {
     }
   }
 
-  var package: TargetDependency {
+  var package: ProjectDescription.Package {
+    switch self {
+    case .casePaths:
+      return .package(url: "https://github.com/pointfreeco/swift-case-paths.git", from: "1.7.0")
+
+    case .composableArchitecture:
+      return .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.17.0")
+
+    case .dependencies:
+      return .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.9.2")
+    }
+  }
+
+  var packageDependency: TargetDependency {
     .package(product: name)
   }
 }
@@ -163,7 +176,9 @@ public enum Package: CaseIterable {
 let project = Project(
   name: "GymNote",
   packages: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.17.0")
+    Package.casePaths.package,
+    Package.composableArchitecture.package,
+    Package.dependencies.package,
   ],
   settings: .settings(
     base: [:],
@@ -188,7 +203,7 @@ let project = Project(
         "GymNote/Resources/**"
       ],
       dependencies: [
-        Package.composableArchitecture.package,
+        Package.composableArchitecture.packageDependency,
       ] +
       Feature.allCases.map {
         .target(name: $0.name)
