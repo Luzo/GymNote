@@ -205,9 +205,7 @@ let project = Project(
       dependencies: [
         Package.composableArchitecture.packageDependency,
       ] +
-      Feature.allCases.map {
-        .target(name: $0.name)
-      }
+      Feature.allCases.map(\.targetDependency)
     ),
     .target(
       name: "GymNoteTests",
