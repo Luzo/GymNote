@@ -7,6 +7,7 @@
 
 import CasePaths
 import ComposableArchitecture
+import NewRecord
 import SwiftData
 import SwiftUI
 
@@ -72,11 +73,11 @@ extension AppFeature {
             }
           }
         }
-//        .sheet(
-//          item: $store.scope(state: \.newRecordState, action: \.newRecord)
-//        ) { store in
-//          NewRecordFeature.MainView(store: store)
-//        }
+        .sheet(
+          item: $store.scope(state: \.newRecordState, action: \.newRecord)
+        ) { store in
+          NewRecordFeature.MainView(store: store)
+        }
       }
     }
   }
