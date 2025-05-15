@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>GymNote</string>
+	<key>UILaunchScreen</key>
+	<dict>
+	    <key>BackgroundColor</key>
+	    <dict>
+	        <key>UIColorWhite</key>
+	        <true/>
+	    </dict>
+	    <key>ImageName</key>
+	    <string>LaunchImage</string>
+	    <key>Image respects safe area insets</key>
+	    <false/>
+	    <key>ContentMode</key>
+	    <string>ScaleAspectFit</string>
+	</dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow mic recording to use app transcription function</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Allow speech recognition to use app transcription function</string>
+	<key>UIRequiresFullScreen</key>
+	<false/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>apiKeyGroq</key>
+	<string>$(APIKeyGroq)</string>
+</dict>
+</plist>

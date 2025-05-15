@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "BF730408-E612-4BF1-9559-EE5C21C222AD",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:GymNote.xcodeproj",
+      "identifier" : "E8BF97052D1E01A100967F6A",
+      "name" : "GymNote"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GymNote.xcodeproj",
+        "identifier" : "E8BF97152D1E01A300967F6A",
+        "name" : "GymNoteTests"
+      }
+    }
+  ],
+  "version" : 1
+}
