@@ -35,7 +35,7 @@ public struct AppFeature {
     case newRecord(PresentationAction<NewRecordFeature.Action>)
     case receivedSavedRecords([ExerciseRecord])
     case recordsChanged
-    case recognizedTextResult(Result<String, SpeechRecognizer.RecognizerError>)
+    case recognizedTextResult(Result<String, RecognizerError>)
 
 
     @CasePathable

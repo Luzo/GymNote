@@ -7,46 +7,12 @@
 
 import Dependencies
 import Foundation
+import Service
 
-// MARK: - NetworkError
-public enum NetworkError: Error, Equatable {
-  case invalidURL
-  case noData
-  case decodingError
-  case serverError(Int)
-  case unknown
-}
-
-
-enum RequestMethod: String {
-  case get = "GET"
-  case post = "POST"
-  case put = "PUT"
-  case delete = "DELETE"
-}
-
-
-extension DependencyValues {
-  var networkService: NetworkServiceProvider {
-    get { self[NetworkServiceKey.self] }
-    set { self[NetworkServiceKey.self] = newValue }
-  }
-}
-
-enum NetworkServiceKey: DependencyKey {
+extension NetworkServiceKey: @retroactive DependencyKey {
   public static var liveValue: NetworkServiceProvider {
     NetworkService()
   }
-}
-
-protocol NetworkServiceProvider {
-  func request<T: Decodable>(
-    endpoint: String,
-    method: RequestMethod,
-    parameters: [String: Any],
-    headers: [String: String],
-    session: URLSession
-  ) async -> Result<T, NetworkError>
 }
 
 final class NetworkService: NetworkServiceProvider {
@@ -79,7 +45,7 @@ final class NetworkService: NetworkServiceProvider {
 
       let decodedResponse = try JSONDecoder().decode(T.self, from: data)
       return .success(decodedResponse)
-    } catch let decodingError as DecodingError {
+    } catch is DecodingError {
       return .failure(.decodingError)
     } catch {
       return .failure(.unknown)

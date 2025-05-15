@@ -28,7 +28,7 @@ public struct ExtractedReport: Equatable {
 
 extension ExtractedReportExternal: DomainMappable {
 
-  func toDomainModel() -> ExtractedReport {
+  public func toDomainModel() -> ExtractedReport {
     @Dependency(\.date.now) var today
     let dateFormatter = ISO8601DateFormatter()
     let convertedDate = date.flatMap(dateFormatter.date(from:)) ?? today

@@ -8,23 +8,10 @@
 import Dependencies
 import Exercise
 import Foundation
+import Service
 import SwiftData
 
-// TODO: Fix error types
-extension DependencyValues {
-  public var exerciseRecordContainerService: ExerciseRecordContainerService {
-    get { self[ExerciseRecordContainerService.self] }
-    set { self[ExerciseRecordContainerService.self] = newValue }
-  }
-}
-
-public struct ExerciseRecordContainerService {
-  public var save: (ExerciseRecord) async throws -> Void
-  public var fetchAll: () async throws -> [ExerciseRecord]
-  public var delete: (ExerciseRecord.ID) async throws -> Void
-}
-
-extension ExerciseRecordContainerService: DependencyKey {
+extension ExerciseRecordContainerService: @retroactive DependencyKey {
   public static var liveValue: ExerciseRecordContainerService {
     @Dependency(\.modelContainer) var modelContainer
 

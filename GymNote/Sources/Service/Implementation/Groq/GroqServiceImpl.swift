@@ -8,23 +8,13 @@
 import Dependencies
 import Exercise
 import Foundation
-
-public struct GroqService {
-  public var extractReport: (String) async -> Result<ExtractedReport, AIResponseError>
-}
+import Service
 
 private extension GroqService {
   enum ExtractReport {}
 }
 
-extension DependencyValues {
-  public var groqService: GroqService {
-    get { self[GroqService.self] }
-    set { self[GroqService.self] = newValue }
-  }
-}
-
-extension GroqService: DependencyKey {
+extension GroqService: @retroactive DependencyKey {
   public static var liveValue: GroqService {
     .init(
       extractReport: { text in

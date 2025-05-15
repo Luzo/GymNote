@@ -8,16 +8,10 @@
 import Dependencies
 import Exercise
 import Foundation
+import Service
 import SwiftData
 
-extension DependencyValues {
-  var modelContainer: ModelContainer {
-    get { self[ModelContainerKey.self] }
-    set { self[ModelContainerKey.self] = newValue }
-  }
-}
-
-enum ModelContainerKey: DependencyKey {
+extension ModelContainerKey: @retroactive DependencyKey {
   public static var liveValue: ModelContainer {
     ModelContainer.createModelContainer(withName: "default.store")
   }

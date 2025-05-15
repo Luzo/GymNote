@@ -23,7 +23,8 @@ public enum Feature: CaseIterable {
         Package.casePaths.packageDependency,
         Package.composableArchitecture.packageDependency,
         Package.dependencies.packageDependency,
-        Service.targetDependency,
+        Service.interface.targetDependency,
+        Service.implementation.targetDependency,
       ]
 
     case .newRecord:
@@ -32,7 +33,7 @@ public enum Feature: CaseIterable {
         Package.casePaths.packageDependency,
         Package.composableArchitecture.packageDependency,
         Package.dependencies.packageDependency,
-        Service.targetDependency,
+        Service.interface.targetDependency,
         Utils.targetDependency,
       ]
     }
@@ -113,26 +114,57 @@ public enum Utils: CaseIterable {
   }
 }
 
-public enum Service: CaseIterable {
-  static var name: String {
-    return "Service"
+public enum Service {
+  case interface
+  case implementation
+
+  var name: String {
+    switch self {
+    case .interface:
+      return "Service"
+    case .implementation:
+      return "ServiceImpl"
+    }  
   }
 
-  public static var targetDependency: TargetDependency {
+  var sourcesPath: SourceFilesList.ArrayLiteralElement {
+    switch self {
+    case .interface:
+      return "GymNote/Sources/Service/Interface/**"
+    case .implementation:
+      return "GymNote/Sources/Service/Implementation/**"
+    }    
+  }
+
+  var dependencies: [TargetDependency] {
+    switch self {
+    case .interface:
+      return [
+        Domain.exercise.targetDependency,
+        Package.dependencies.packageDependency,
+      ]
+
+    case .implementation:
+      return [
+        Domain.exercise.targetDependency,
+        Package.dependencies.packageDependency,
+        Service.interface.targetDependency,
+      ]
+    }
+  }
+
+  public var targetDependency: TargetDependency {
     .target(name: name)
   }
 
-  public static var target: Target {
+  public var target: Target {
     .target(
       name: name,
       destinations: .iOS,
       product: .framework,
       bundleId: "lubos.lehota.GymNote.\(name)",
-      sources: ["GymNote/Sources/\(name)/**"],
-      dependencies: [
-        Domain.exercise.targetDependency,
-        Package.dependencies.packageDependency,
-      ]
+      sources: [sourcesPath],
+      dependencies: dependencies
     )
   }
 }
@@ -220,7 +252,8 @@ let project = Project(
       ]
     ),
     Utils.target,
-    Service.target
+    Service.interface.target,
+    Service.implementation.target
   ]
   + Target.featureTargets()
   + Target.domainTargets()

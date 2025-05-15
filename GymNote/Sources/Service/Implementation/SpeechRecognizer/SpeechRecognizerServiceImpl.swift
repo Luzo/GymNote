@@ -8,22 +8,11 @@
 import Dependencies
 import Foundation
 import AVFoundation
+import Service
 import Speech
 import SwiftUI
 
-public struct SpeechRecognizerService {
-  public var recognizeText: () async -> Result<String, SpeechRecognizer.RecognizerError>
-  public var stopRecognizing: () async -> Void
-}
-
-extension DependencyValues {
-  public var speechRecognizerService: SpeechRecognizerService {
-    get { self[SpeechRecognizerService.self] }
-    set { self[SpeechRecognizerService.self] = newValue }
-  }
-}
-
-extension SpeechRecognizerService: DependencyKey {
+extension SpeechRecognizerService: @retroactive DependencyKey {
   public static var liveValue: SpeechRecognizerService {
     return .init(
       recognizeText: {
@@ -45,28 +34,10 @@ extension SpeechRecognizerService: DependencyKey {
       }
     )
   }
-
-  // TODO: Implement previewValue and testValue
-  public static var previewValue: SpeechRecognizerService {
-    .liveValue
-  }
-
-  public static var testValue: SpeechRecognizerService {
-    .liveValue
-  }
 }
 
 // TODO: check for further optimizations of calls - this is basically v.2 from example from Apple
 public actor SpeechRecognizer {
-  // TODO: this should be domain independent
-  public enum RecognizerError: Error {
-    case nilRecognizer
-    case notAuthorizedToRecognize
-    case notPermittedToRecord
-    case recognizerIsUnavailable
-    case unknown(String)
-  }
-
   private var audioEngine: AVAudioEngine?
   private var request: SFSpeechAudioBufferRecognitionRequest?
   private var task: SFSpeechRecognitionTask?
@@ -183,7 +154,7 @@ public actor SpeechRecognizer {
     audioEngine: AVAudioEngine,
     result: SFSpeechRecognitionResult?,
     error: Error?,
-    checkedContinuation: CheckedContinuation<Result<String, SpeechRecognizer.RecognizerError>, Never>
+    checkedContinuation: CheckedContinuation<Result<String, RecognizerError>, Never>
   ) {
     let receivedFinalResult = result?.isFinal ?? false
     let receivedError = error != nil
